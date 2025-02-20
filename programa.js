@@ -376,7 +376,7 @@ devolverPrestamo.addEventListener('click', function(){
     let numeroIdentificadorDevolver = numeroIdentificadorDevolverInput.value;
     let nombreDevolver = nombreDevolverInput.value;
     let marcaDevolver = marcaDevolverInput.value;
-    let cantidadDevolver = cantidadDevolverInput.value;
+    let cantidadDevolver = parseInt(cantidadDevolverInput.value);
     let filaCambiarDevolver = 0;
 
 
@@ -387,7 +387,7 @@ devolverPrestamo.addEventListener('click', function(){
 
             personaDevolver = i;
 
-            if (marcaDevolver == marcasPrestamo[i] && nombreDevolver == nombres[i]) {
+            if (marcaDevolver == marcasPrestamo[personaDevolver] && nombreDevolver == nombres[personaDevolver]) {
 
 
                 if (cantidadDevolver<=cantidadesPrestamo[i]){
@@ -397,10 +397,10 @@ devolverPrestamo.addEventListener('click', function(){
 
                     if (cantidadDevolver==cantidadesPrestamo[i]) {
 
-                        numerosPrestamo.splice(i-1,1)
-                        nombresPrestamo.splice(i-1,1) 
-                        marcasPrestamo.splice(i-1,1)
-                        cantidadesPrestamo.splice(i-1,1)
+                        numerosPrestamo.splice(i,1)
+                        nombresPrestamo.splice(i,1) 
+                        marcasPrestamo.splice(i,1)
+                        cantidadesPrestamo.splice(i,1)
 
                         for (i=0; i<nombres.length; i++) {
 
@@ -454,6 +454,64 @@ devolverPrestamo.addEventListener('click', function(){
                     
                             tabla.appendChild(fila);
                     
+                        }
+
+                    } else {
+
+                        for (i=0; i<nombres.length; i++) {
+
+                            if (nombres[i]==nombreDevolver) {
+
+                                filaCambiarDevolver = i;
+
+                            }
+
+                        }
+
+                        cantidades[filaCambiarDevolver] += cantidadDevolver;
+
+                        cantidadesPrestamo[personaDevolver] -= cantidadDevolver;
+
+                        for (  let i = 0; i<nombres.length; i++) {
+
+                            const fila = document.createElement('tr');
+                            const col1 = document.createElement('td');
+                            const col2 = document.createElement('td');
+                            const col3 = document.createElement('td');
+                    
+                            col1.textContent = nombres[i];
+                            col2.textContent = marcas[i];
+                            col3.textContent = cantidades[i];
+                    
+                            fila.appendChild(col1);
+                            fila.appendChild(col2);
+                            fila.appendChild(col3);
+                    
+                            tabla.appendChild(fila);
+                    
+                        }
+
+                        for (i=0; i<nombresPrestamo.length; i++) {
+
+        
+                            const filaPrestamo = document.createElement('tr');
+                            const col1Prestamo = document.createElement('td');
+                            const col2Prestamo = document.createElement('td');
+                            const col3Prestamo = document.createElement('td');
+                            const col4Prestamo = document.createElement('td');
+                        
+                            col1Prestamo.textContent = numerosPrestamo[i];
+                            col2Prestamo.textContent = nombresPrestamo[i];
+                            col3Prestamo.textContent = marcasPrestamo[i];
+                            col4Prestamo.textContent = cantidadesPrestamo[i];
+                        
+                            filaPrestamo.appendChild(col1Prestamo);
+                            filaPrestamo.appendChild(col2Prestamo);
+                            filaPrestamo.appendChild(col3Prestamo);
+                            filaPrestamo.appendChild(col4Prestamo);
+                        
+                            tabla3.appendChild(filaPrestamo);
+                
                         }
 
                     }
